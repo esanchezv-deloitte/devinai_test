@@ -1,0 +1,15 @@
+<mat-drawer-container class="container">
+  <mat-drawer mode="side" opened class="sidebar">
+    <mat-nav-list role="list">
+      <mat-list-item role="listitem" [routerLink]="['/admin/bank']" routerLinkActive="active" >BancoDigital</mat-list-item>
+      <mat-list-item role="listitem" [routerLink]="['/admin/dashboard']" routerLinkActive="active" >Dashboard</mat-list-item>
+      <mat-list-item role="listitem" [routerLink]="['/admin/users']" routerLinkActive="active" >Users</mat-list-item>
+      
+      <mat-list-item role="listitem"></mat-list-item>
+      <mat-list-item role="listitem" (click)="logout()">Logout</mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content class="content">
+    <router-outlet />
+  </mat-drawer-content>
+</mat-drawer-container>

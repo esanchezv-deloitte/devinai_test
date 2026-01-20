@@ -1,0 +1,292 @@
+<div class="bank-container">
+  <!-- Success Alert -->
+  <div class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3" 
+       role="alert" 
+       *ngIf="showSuccessAlert"
+       style="z-index: 1050;">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    {{ alertMessage }}
+  </div>
+
+  <!-- Header -->
+  <header class="bank-header">
+    <div class="container-fluid">
+      <div class="row align-items-center py-3">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <div class="bank-logo me-3">
+              <i class="bi bi-bank2"></i>
+            </div>
+            <div>
+              <h1 class="bank-title mb-0">BancoDigital</h1>
+              <small class="text-light opacity-75">Tu banco de confianza</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="user-info">
+            <span class="welcome-text">Bienvenido,</span>
+            <span class="user-name">{{ userName }}</span>
+            <div class="date-display">{{ currentDate | date:'EEEE, d MMMM yyyy':'':'es' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="bank-main">
+    <div class="container-fluid py-4">
+      <!-- Balance Overview Cards -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h4 class="section-title mb-3">
+            <i class="bi bi-wallet2 me-2"></i>Resumen de Cuentas
+          </h4>
+        </div>
+        
+        <!-- Total Balance Card -->
+        <div class="col-lg-4 col-md-6 mb-3">
+          <div class="card balance-card total-balance">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="card-subtitle mb-2">Balance Total</h6>
+                  <h2 class="card-title mb-0">{{ formatCurrency(totalBalance) }}</h2>
+                </div>
+                <div class="balance-icon">
+                  <i class="bi bi-piggy-bank-fill"></i>
+                </div>
+              </div>
+              <div class="mt-3">
+                <small class="text-success">
+                  <i class="bi bi-graph-up-arrow me-1"></i>
+                  +2.5% este mes
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Cards -->
+        <div class="col-lg-4 col-md-6 mb-3" *ngFor="let account of accounts.slice(0, 2)">
+          <div class="card balance-card" 
+               [class.selected]="selectedAccount?.id === account.id"
+               (click)="selectAccount(account)">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="card-subtitle mb-2">{{ account.name }}</h6>
+                  <h3 class="card-title mb-0">{{ formatCurrency(account.balance) }}</h3>
+                </div>
+                <div class="balance-icon" [ngClass]="account.type">
+                  <i class="bi" [ngClass]="{
+                    'bi-safe-fill': account.type === 'savings',
+                    'bi-credit-card-fill': account.type === 'checking',
+                    'bi-graph-up': account.type === 'investment'
+                  }"></i>
+                </div>
+              </div>
+              <div class="mt-3">
+                <small class="account-number">{{ account.accountNumber }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions & Account Details -->
+      <div class="row mb-4">
+        <!-- Quick Actions -->
+        <div class="col-lg-4 mb-3">
+          <div class="card action-card h-100">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <i class="bi bi-lightning-charge-fill me-2"></i>Acciones Rapidas
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-3">
+                <button class="btn btn-action btn-transfer" (click)="openTransferModal()">
+                  <i class="bi bi-send-fill me-2"></i>
+                  Transferir Dinero
+                </button>
+                <button class="btn btn-action btn-deposit" (click)="makeDeposit()">
+                  <i class="bi bi-plus-circle-fill me-2"></i>
+                  Depositar $500
+                </button>
+                <button class="btn btn-action btn-pay">
+                  <i class="bi bi-receipt me-2"></i>
+                  Pagar Servicios
+                </button>
+                <button class="btn btn-action btn-card">
+                  <i class="bi bi-credit-card-2-front-fill me-2"></i>
+                  Solicitar Tarjeta
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Account Details -->
+        <div class="col-lg-8 mb-3">
+          <div class="card details-card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-info-circle-fill me-2"></i>Detalles de Cuenta
+              </h5>
+              <div class="btn-group" role="group">
+                <button type="button" 
+                        class="btn btn-sm" 
+                        *ngFor="let account of accounts"
+                        [class.btn-primary]="selectedAccount?.id === account.id"
+                        [class.btn-outline-primary]="selectedAccount?.id !== account.id"
+                        (click)="selectAccount(account)">
+                  {{ account.name.split(' ')[2] || account.name.split(' ')[1] }}
+                </button>
+              </div>
+            </div>
+            <div class="card-body" *ngIf="selectedAccount">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-item">
+                    <span class="detail-label">Tipo de Cuenta</span>
+                    <span class="detail-value">{{ selectedAccount.name }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Numero de Cuenta</span>
+                    <span class="detail-value">{{ selectedAccount.accountNumber }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Moneda</span>
+                    <span class="detail-value">{{ selectedAccount.currency }}</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="account-balance-display">
+                    <span class="balance-label">Saldo Disponible</span>
+                    <span class="balance-amount">{{ formatCurrency(selectedAccount.balance) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card transactions-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-clock-history me-2"></i>Historial de Transacciones
+              </h5>
+              <button class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-download me-1"></i>Exportar
+              </button>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th>Tipo</th>
+                      <th>Descripcion</th>
+                      <th>Fecha</th>
+                      <th class="text-end">Monto</th>
+                      <th class="text-end">Saldo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let transaction of transactions">
+                      <td>
+                        <span class="transaction-icon" [ngClass]="getTransactionColor(transaction.type)">
+                          <i class="bi" [ngClass]="getTransactionIcon(transaction.type)"></i>
+                        </span>
+                      </td>
+                      <td>{{ transaction.description }}</td>
+                      <td>{{ formatDate(transaction.date) }}</td>
+                      <td class="text-end" [ngClass]="transaction.amount >= 0 ? 'text-success' : 'text-danger'">
+                        {{ transaction.amount >= 0 ? '+' : '' }}{{ formatCurrency(transaction.amount) }}
+                      </td>
+                      <td class="text-end fw-semibold">{{ formatCurrency(transaction.balance) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Transfer Modal -->
+  <div class="modal-backdrop" *ngIf="showTransferModal" (click)="closeTransferModal()"></div>
+  <div class="modal d-block" tabindex="-1" *ngIf="showTransferModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-send-fill me-2"></i>Transferir Dinero
+          </h5>
+          <button type="button" class="btn-close" (click)="closeTransferModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Cuenta Origen</label>
+            <select class="form-select" [(ngModel)]="selectedAccount">
+              <option *ngFor="let account of accounts" [ngValue]="account">
+                {{ account.name }} - {{ formatCurrency(account.balance) }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Destinatario</label>
+            <input type="text" class="form-control" [(ngModel)]="transferRecipient" 
+                   placeholder="Nombre del destinatario">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Monto</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="number" class="form-control" [(ngModel)]="transferAmount" 
+                     placeholder="0.00" min="0" step="0.01">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripcion (opcional)</label>
+            <textarea class="form-control" [(ngModel)]="transferDescription" 
+                      rows="2" placeholder="Concepto de la transferencia"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeTransferModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="executeTransfer()"
+                  [disabled]="!transferAmount || !transferRecipient">
+            <i class="bi bi-check-lg me-1"></i>Confirmar Transferencia
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bank-footer">
+    <div class="container-fluid">
+      <div class="row py-3">
+        <div class="col-md-6">
+          <small>&copy; 2026 BancoDigital. Todos los derechos reservados.</small>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <small>
+            <a href="#" class="footer-link me-3">Terminos y Condiciones</a>
+            <a href="#" class="footer-link me-3">Privacidad</a>
+            <a href="#" class="footer-link">Ayuda</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

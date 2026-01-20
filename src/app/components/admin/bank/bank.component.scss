@@ -1,0 +1,472 @@
+.bank-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+}
+
+.bank-header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(26, 35, 126, 0.3);
+
+  .bank-logo {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .bank-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .user-info {
+    .welcome-text {
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+
+    .user-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .date-display {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+.bank-main {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+.section-title {
+  color: #1a237e;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.balance-card {
+  border: none;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  &.selected {
+    border: 2px solid #3949ab;
+    box-shadow: 0 10px 30px rgba(57, 73, 171, 0.3);
+  }
+
+  &.total-balance {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    color: white;
+
+    .card-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .balance-icon {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .card-title {
+    font-weight: 700;
+    color: #1a237e;
+  }
+
+  .balance-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #3949ab;
+
+    &.savings {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      color: #2e7d32;
+    }
+
+    &.checking {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      color: #ef6c00;
+    }
+
+    &.investment {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      color: #1565c0;
+    }
+  }
+
+  .account-number {
+    color: #999;
+    font-family: monospace;
+    letter-spacing: 2px;
+  }
+}
+
+.action-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+  .card-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 1.5rem;
+    border-radius: 16px 16px 0 0;
+
+    h5 {
+      color: #1a237e;
+      font-weight: 600;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .btn-action {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: left;
+    transition: all 0.3s ease;
+    border: none;
+
+    &:hover {
+      transform: translateX(5px);
+    }
+
+    &.btn-transfer {
+      background: linear-gradient(135deg, #3949ab 0%, #5c6bc0 100%);
+      color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #283593 0%, #3949ab 100%);
+      }
+    }
+
+    &.btn-deposit {
+      background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+      color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+      }
+    }
+
+    &.btn-pay {
+      background: linear-gradient(135deg, #ef6c00 0%, #fb8c00 100%);
+      color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #e65100 0%, #ef6c00 100%);
+      }
+    }
+
+    &.btn-card {
+      background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+      color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #6a1b9a 0%, #7b1fa2 100%);
+      }
+    }
+  }
+}
+
+.details-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+  .card-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 1.5rem;
+    border-radius: 16px 16px 0 0;
+
+    h5 {
+      color: #1a237e;
+      font-weight: 600;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .detail-item {
+    margin-bottom: 1rem;
+
+    .detail-label {
+      display: block;
+      font-size: 0.75rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+    }
+
+    .detail-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  .account-balance-display {
+    background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .balance-label {
+      display: block;
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+    .balance-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a237e;
+    }
+  }
+}
+
+.transactions-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+
+  .card-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 1.5rem;
+
+    h5 {
+      color: #1a237e;
+      font-weight: 600;
+    }
+  }
+
+  .table {
+    margin-bottom: 0;
+
+    thead {
+      background: #f8f9fa;
+
+      th {
+        border: none;
+        padding: 1rem 1.5rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #666;
+        font-weight: 600;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: #f8f9fa;
+        }
+
+        td {
+          padding: 1rem 1.5rem;
+          vertical-align: middle;
+          border-color: #eee;
+        }
+      }
+    }
+  }
+
+  .transaction-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+
+    &.text-success {
+      background: rgba(46, 125, 50, 0.1);
+    }
+
+    &.text-danger {
+      background: rgba(211, 47, 47, 0.1);
+    }
+
+    &.text-primary {
+      background: rgba(57, 73, 171, 0.1);
+    }
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+
+  .modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #eee;
+    padding: 1.5rem;
+
+    .modal-title {
+      color: #1a237e;
+      font-weight: 600;
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+
+    .form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e0e0e0;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        border-color: #3949ab;
+        box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.1);
+      }
+    }
+  }
+
+  .modal-footer {
+    border-top: 1px solid #eee;
+    padding: 1rem 1.5rem;
+
+    .btn {
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3949ab 0%, #5c6bc0 100%);
+      border: none;
+
+      &:hover {
+        background: linear-gradient(135deg, #283593 0%, #3949ab 100%);
+      }
+
+      &:disabled {
+        background: #ccc;
+      }
+    }
+  }
+}
+
+.bank-footer {
+  background: #1a237e;
+  color: white;
+  margin-top: auto;
+
+  small {
+    opacity: 0.8;
+  }
+
+  .footer-link {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .bank-header {
+    .user-info {
+      margin-top: 1rem;
+      text-align: left !important;
+    }
+  }
+
+  .balance-card {
+    .card-title {
+      font-size: 1.25rem;
+    }
+  }
+
+  .details-card {
+    .account-balance-display {
+      margin-top: 1rem;
+
+      .balance-amount {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
